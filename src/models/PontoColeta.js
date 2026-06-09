@@ -27,6 +27,8 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       allowNull: true,
     },
+  }, {
+    tableName: 'PontoColetas',
   });
 
   PontoColeta.associate = (db) => {
