@@ -7,13 +7,13 @@ async function seedAdmin() {
 
   const hash = await bcrypt.hash('admin123', 10);
   await User.create({
-    nome: 'Administrador',
-    email: 'admin@admin.com',
+    nome: 'Ana Laura Acioly',
+    email: 'lauralalaacioly@gmail.com',
     senha: hash,
     role: 'admin',
   });
 
-  console.log('Usuário admin criado: admin@admin.com / admin123');
+  console.log('Usuário admin criado: lauralalaacioly@gmail.com / admin123');
 }
 
 module.exports = seedAdmin;
