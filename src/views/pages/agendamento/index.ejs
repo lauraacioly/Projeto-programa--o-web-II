@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Coleta Seletiva</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../../partials/header') %>
+
+  <main class="container">
+    <div class="page-header">
+      <h1 class="page-title">Meus Agendamentos</h1>
+      <a href="/agendamentos/novo" class="btn btn-primary">+ Novo Agendamento</a>
+    </div>
+
+    <% if (success) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+
+    <% if (agendamentos.length === 0) { %>
+      <div class="empty-state">
+        <p>Nenhum agendamento cadastrado ainda.</p>
+        <a href="/agendamentos/novo" class="btn btn-primary">Criar primeiro agendamento</a>
+      </div>
+    <% } else { %>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Ponto de Coleta</th>
+              <th>Resíduo</th>
+              <th>Data</th>
+              <th>Horário</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% agendamentos.forEach(ag => { %>
+              <tr>
+                <td><%= ag.id %></td>
+                <td><strong><%= ag.pontoColeta ? ag.pontoColeta.nome : '(ponto removido)' %></strong></td>
+                <td><%= ag.residuo ? ag.residuo.nome : '(resíduo removido)' %></td>
+                <td><%= ag.data.split('-').reverse().join('/') %></td>
+                <td><%= ag.horario %></td>
+                <td>
+                  <span class="status-badge status-<%= ag.status %>">
+                    <%= ag.status.charAt(0).toUpperCase() + ag.status.slice(1) %>
+                  </span>
+                </td>
+                <td class="actions">
+                  <a href="/agendamentos/<%= ag.id %>/editar" class="btn btn-sm btn-secondary">Editar</a>
+                  <form action="/agendamentos/<%= ag.id %>?_method=DELETE" method="POST" class="form-inline"
+                        onsubmit="return confirm('Tem certeza que deseja excluir este agendamento?')">
+                    <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </main>
+
+  <%- include('../../partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>
