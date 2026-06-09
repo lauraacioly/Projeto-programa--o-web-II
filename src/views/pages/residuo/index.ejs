@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Coleta Seletiva</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../../partials/header') %>
+
+  <main class="container">
+    <div class="page-header">
+      <h1 class="page-title">Resíduos</h1>
+      <% if (locals.user && locals.user.role === 'admin') { %>
+        <a href="/residuos/novo" class="btn btn-primary">+ Novo Resíduo</a>
+      <% } %>
+    </div>
+
+    <% if (success) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+    <% if (error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
+    <% if (residuos.length === 0) { %>
+      <div class="empty-state">
+        <p>Nenhum resíduo cadastrado ainda.</p>
+        <% if (locals.user && locals.user.role === 'admin') { %>
+          <a href="/residuos/novo" class="btn btn-primary">Cadastrar primeiro resíduo</a>
+        <% } %>
+      </div>
+    <% } else { %>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Categoria</th>
+              <th>Descrição</th>
+              <% if (locals.user && locals.user.role === 'admin') { %><th>Ações</th><% } %>
+            </tr>
+          </thead>
+          <tbody>
+            <% residuos.forEach(residuo => { %>
+              <tr>
+                <td><%= residuo.id %></td>
+                <td><strong><%= residuo.nome %></strong></td>
+                <td><%= residuo.categoria %></td>
+                <td><%= residuo.descricao || '—' %></td>
+                <% if (locals.user && locals.user.role === 'admin') { %>
+                <td class="actions">
+                  <a href="/residuos/<%= residuo.id %>/editar" class="btn btn-sm btn-secondary">Editar</a>
+                  <form action="/residuos/<%= residuo.id %>?_method=DELETE" method="POST" class="form-inline"
+                        onsubmit="return confirm('Tem certeza que deseja excluir o resíduo \'<%= residuo.nome %>\'?')">
+                    <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                  </form>
+                </td>
+                <% } %>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </main>
+
+  <%- include('../../partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>
