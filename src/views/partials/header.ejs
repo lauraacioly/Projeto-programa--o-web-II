@@ -1,0 +1,93 @@
+<% if (locals.user) { %>
+  <header class="topbar">
+    <button class="topbar-toggle" id="sidebarToggle" aria-label="Alternar menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6"  x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <a href="/dashboard" class="topbar-brand">♻ Coleta Seletiva</a>
+    <div class="topbar-right">
+      <div class="topbar-user">
+        <div class="user-avatar"><%= locals.user.nome.charAt(0) %></div>
+        <span><%= locals.user.nome %></span>
+      </div>
+      <a href="/auth/logout" class="topbar-logout">Sair</a>
+    </div>
+  </header>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">♻</div>
+        <span>Coleta Seletiva Urbana</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <div class="sidebar-section-label">Principal</div>
+
+          <a href="/dashboard" class="sidebar-link" data-path="/dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="14" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+            </svg>
+            Dashboard
+          </a>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section-label">Gerenciar</div>
+
+          <a href="/pontos-coleta" class="sidebar-link" data-path="/pontos-coleta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 21s-8-5.3-8-12a8 8 0 1 1 16 0c0 6.7-8 12-8 12z"/>
+              <circle cx="12" cy="9" r="3"/>
+            </svg>
+            Pontos de Coleta
+          </a>
+
+          <a href="/residuos" class="sidebar-link" data-path="/residuos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"/>
+              <path d="M3.51 15a9 9 0 1 0 .49-5.13"/>
+            </svg>
+            Resíduos
+          </a>
+
+          <a href="/agendamentos" class="sidebar-link" data-path="/agendamentos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8"  y1="2" x2="8"  y2="6"/>
+              <line x1="3"  y1="10" x2="21" y2="10"/>
+            </svg>
+            Agendamentos
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        © <%= new Date().getFullYear() %> Coleta Seletiva
+      </div>
+    </aside>
+
+    <div class="page-content" id="pageContent">
+
+<% } else { %>
+  <header class="header">
+    <nav class="navbar">
+      <a href="/" class="navbar-brand">♻ Coleta Seletiva Urbana</a>
+      <ul class="nav-links">
+        <li><a href="/">Início</a></li>
+        <li><a href="/auth/login">Entrar</a></li>
+        <li><a href="/auth/register" class="nav-cta">Cadastrar</a></li>
+      </ul>
+    </nav>
+  </header>
+<% } %>
