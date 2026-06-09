@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const app = require('./src/app');
 const { sequelize } = require('./src/models');
+const seedAdmin = require('./src/seeds/adminSeed');
 
 const PORT = process.env.PORT || 3000;
 
@@ -12,6 +13,8 @@ async function startServer() {
 
     await sequelize.sync({ alter: true });
     console.log('Modelos sincronizados com o banco de dados.');
+
+    await seedAdmin();
 
     app.listen(PORT, () => {
       console.log(`Servidor rodando em http://localhost:${PORT}`);
