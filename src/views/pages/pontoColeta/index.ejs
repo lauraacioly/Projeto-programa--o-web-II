@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Coleta Seletiva</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../../partials/header') %>
+
+  <main class="container">
+    <div class="page-header">
+      <h1 class="page-title">Pontos de Coleta</h1>
+      <% if (locals.user && locals.user.role === 'admin') { %>
+        <a href="/pontos-coleta/novo" class="btn btn-primary">+ Novo Ponto</a>
+      <% } %>
+    </div>
+
+    <% if (success) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+    <% if (error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
+    <% if (pontos.length === 0) { %>
+      <div class="empty-state">
+        <p>Nenhum ponto de coleta cadastrado ainda.</p>
+        <% if (locals.user && locals.user.role === 'admin') { %>
+          <a href="/pontos-coleta/novo" class="btn btn-primary">Cadastrar primeiro ponto</a>
+        <% } %>
+      </div>
+    <% } else { %>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Endereço</th>
+              <th>Bairro</th>
+              <th>Horário</th>
+              <% if (locals.user && locals.user.role === 'admin') { %><th>Ações</th><% } %>
+            </tr>
+          </thead>
+          <tbody>
+            <% pontos.forEach(ponto => { %>
+              <tr>
+                <td><%= ponto.id %></td>
+                <td><strong><%= ponto.nome %></strong></td>
+                <td><%= ponto.endereco %></td>
+                <td><%= ponto.bairro %></td>
+                <td><%= ponto.horarioFuncionamento %></td>
+                <% if (locals.user && locals.user.role === 'admin') { %>
+                <td class="actions">
+                  <a href="/pontos-coleta/<%= ponto.id %>/editar" class="btn btn-sm btn-secondary">Editar</a>
+                  <form action="/pontos-coleta/<%= ponto.id %>?_method=DELETE" method="POST" class="form-inline"
+                        onsubmit="return confirm('Tem certeza que deseja excluir o ponto \'<%= ponto.nome %>\'?')">
+                    <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                  </form>
+                </td>
+                <% } %>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </main>
+
+  <%- include('../../partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>

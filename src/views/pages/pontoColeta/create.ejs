@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Coleta Seletiva</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../../partials/header') %>
+
+  <main class="container">
+    <div class="page-header">
+      <h1 class="page-title">Novo Ponto de Coleta</h1>
+      <a href="/pontos-coleta" class="btn btn-secondary">&#8592; Voltar</a>
+    </div>
+
+    <div class="form-card">
+      <% if (error) { %>
+        <div class="alert alert-error"><%= error %></div>
+      <% } %>
+
+      <form action="/pontos-coleta" method="POST" class="crud-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome">Nome <span class="required">*</span></label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              placeholder="Ex: Ecoponto Central"
+              value="<%= dados.nome || '' %>"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="bairro">Bairro <span class="required">*</span></label>
+            <input
+              type="text"
+              id="bairro"
+              name="bairro"
+              placeholder="Ex: Centro"
+              value="<%= dados.bairro || '' %>"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="endereco">Endereço <span class="required">*</span></label>
+          <input
+            type="text"
+            id="endereco"
+            name="endereco"
+            placeholder="Ex: Rua das Flores, 123"
+            value="<%= dados.endereco || '' %>"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="horarioFuncionamento">Horário de Funcionamento <span class="required">*</span></label>
+          <input
+            type="text"
+            id="horarioFuncionamento"
+            name="horarioFuncionamento"
+            placeholder="Ex: Seg–Sex 08h–18h, Sáb 08h–12h"
+            value="<%= dados.horarioFuncionamento || '' %>"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="descricao">Descrição</label>
+          <textarea
+            id="descricao"
+            name="descricao"
+            rows="3"
+            placeholder="Informações adicionais sobre o ponto de coleta (opcional)"
+          ><%= dados.descricao || '' %></textarea>
+        </div>
+
+        <div class="form-actions">
+          <a href="/pontos-coleta" class="btn btn-secondary">Cancelar</a>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <%- include('../../partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>
